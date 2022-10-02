@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Add News Here</title>
+       <link rel="stylesheet" href="addnews.css"> 
+	</head>
+	<body>
+
+        <span>Please Add News Here</span>
+        <div id="size" >
+        <label for="number">News Number:</label>
+		&nbsp;
+        <input type="text" id="number" size="50" />
+		<br /> <br>
+        <label for="headline">Headline:</label>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" id="headline"  size="50"/>
+		<br /> <br>
+        <label for="news">News:</label>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="textarea" id="news" size="50" />
+		<br /> <br>
+		<button type="submit"  id="save" onclick="save()">SAVE</button>&nbsp;&nbsp;
+        <button onclick="del()" id="del">Delete</button>&nbsp;&nbsp;
+        <button onclick="show()" id="show">Show</button>&nbsp;&nbsp;
+        <a href="index.html" target="_blank"><button id="newsbtn">Go to News Page</button></a>
+        <br />
+    </div>
+    <table border="2px" cellspacing="5px" cellpadding="20">
+        <thead>
+            <th style="width:5%">Number</th>
+            <th style="width:30%">Headline</th>
+            <th style="width:60%">News</th>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+		<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+
+		<!-- Add Firebase products that you want to use -->
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+		<!-- <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script> -->
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+
+		<script>
+			const firebaseConfig = {
+				apiKey: "AIzaSyDQkykOb7nwrQSkfZhjDSJEZC568w8piKk",
+                authDomain: "newsroom-22d67.firebaseapp.com",
+                projectId: "newsroom-22d67",
+                storageBucket: "newsroom-22d67.appspot.com",
+                messagingSenderId: "657374643162",
+                appId: "1:657374643162:web:8d4a85634ad7fbf1b5f6e3"
+			};
+
+             // Initialize Firebase
+            firebase.initializeApp(firebaseConfig)
+
+            var NewsOBJ={}
+            function save(){
+                num=document.getElementById("number").value
+                head=document.getElementById("headline").value
+                news=document.getElementById("news").value
+                
+                NewsOBJ.Number=num
+                NewsOBJ.Head=head
+                NewsOBJ.News=news
+                
+                console.log(NewsOBJ)
+                
+                firebase.database().ref('/News/'+ num).set(NewsOBJ)
+                
+                show()
+                clear()
+                alert("Data Save")
+            }
+            function del(){
+                num = document.getElementById("number").value;
+                
+                firebase.database().ref('/News/' + num).remove();
+
+                alert("Data Deleted")
+                show()
+                clear()
+            }
+            function show(){
+
+                document.getElementById("tbody").innerHTML=""
+
+                firebase.database().ref('/News/').once("value", function (AllRecord){
+                    AllRecord.forEach(function (snapshot){
+
+
+                        addItem(snapshot.val().Number,snapshot.val().Head,snapshot.val().News)
+
+                        console.log(snapshot.val().Number,snapshot.val().Head,snapshot.val().News)
+                        
+
+                    });
+                });
+            }
+            function addItem(number,head,news){
+                row = document.createElement("tr")
+
+                cell1=document.createElement("td")
+                cell2=document.createElement("td")
+                cell3=document.createElement("td")
+
+                cell1.innerText = number
+                cell2.innerText = head
+                cell3.innerText = news
+
+                row.appendChild(cell1)
+                row.appendChild(cell2)
+                row.appendChild(cell3)
+
+                document.getElementById("tbody").appendChild(row)
+            }
+
+            function clear(){
+                document.getElementById("number").value=""
+                document.getElementById("headline").value=""
+                document.getElementById("news").value=""
+            }
+		</script>
+	</body>
+</html>

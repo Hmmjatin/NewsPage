@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>NDTV 18</title>
+		<link rel="stylesheet" href="index.css">
+		
+	</head>
+	
+        
+            <a href="addnews.html" target="_blank"><h2>Add News HERE</h2></a>
+			<div class="Main" id="newss">    
+				<marquee behavior="scroll" direction="up" scrollamount="7" loop="" id="news"></marquee>
+
+			</div>
+		
+
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+		<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+
+		<!-- Add Firebase products that you want to use -->
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+		<!-- <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script> -->
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+
+		<script>
+			const firebaseConfig = {
+				apiKey: "AIzaSyDQkykOb7nwrQSkfZhjDSJEZC568w8piKk",
+				authDomain: "newsroom-22d67.firebaseapp.com",
+				projectId: "newsroom-22d67",
+				storageBucket: "newsroom-22d67.appspot.com",
+				messagingSenderId: "657374643162",
+				appId: "1:657374643162:web:8d4a85634ad7fbf1b5f6e3",
+			};
+
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
+
+            show();
+
+            function show(){
+
+                firebase.database().ref('/News/').once("value", function (AllRecord){
+                    AllRecord.forEach(function (snapshot){
+
+
+                        addItem(snapshot.val().Number,snapshot.val().Head,snapshot.val().News)
+                        
+                        
+
+    
+                    });
+                });
+            }
+            function addItem(number,head,news){
+
+                div=document.createElement("div")
+                div.setAttribute("id","NewsDiv")
+
+                // marque1=document.createElement("marquee")
+                // marque2=document.createElement("marquee")
+
+                Headline=document.createElement("h1")
+
+                News=document.createElement("p")
+                News.setAttribute("id","content")
+                
+                Headline.innerText=head
+                News.innerText=news
+
+                // marque1.innerhtml=Head
+                // marque2.innerhtml=News
+                
+                div.appendChild(Headline)
+                div.appendChild(News)
+
+                document.getElementById("news").appendChild(div)
+            }
+		</script>
+	</body>
+</html>

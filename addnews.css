@@ -1,0 +1,77 @@
+div{
+    padding: 30px;
+    border: 2px solid salmon;
+    text-align: center;
+    justify-content: center;
+    width:70%;
+    margin: auto
+}
+label{
+    font-size: 28px;
+}
+input {
+    line-height: 2em; 
+}
+#save{
+    background-color: rgb(7, 154, 73);
+    border: 1px solid black;
+    color: white;
+    font-size: 23px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+}
+#del{
+    background-color: rgb(255, 15, 15);
+    border: 1px solid black;
+    color: white;
+    font-size: 23px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+
+}
+#newsbtn{
+    background-color: rgb(7, 154, 73);
+    border: 1px solid black;
+    color: white;
+    font-size: 23px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+
+}
+#show{
+    background-color: rgb(206, 41, 173);
+    border: 1px solid black;
+    color: white;
+    font-size: 23px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+
+}
+
+span{
+    font-size: 30px;
+    font-weight: 700;
+    position: relative;
+    left: 40%;
+
+}
